@@ -1,0 +1,38 @@
+<resources>
+    <!-- App wide activity -->
+    <string name="app_name">Money$xfer</string>
+    <string name="app_caption">Your one-stop money transfer solution</string>
+    <string name="title_activity_login">Money$xfer</string>
+
+    <!-- Strings related to Main transfer activity -->
+    <string name="enter_amount">Enter an amount (SGD)</string>
+    <string name="enter_recipient">Recipient email</string>
+    <string name="currency_sgd">SGD</string>
+    <string name="button_send">Send</string>
+    <string name="send_money_title">Transfer money</string>
+
+    <!-- Strings related to Menu activity -->
+    <string name="button_transfer">Transfer money</string>
+    <string name="button_reminder">View reminders</string>
+    <string name="button_reminder_hint">Type reminder here</string>
+    <string name="welcome_message">Hello, what would you like to do today?</string>
+
+    <!-- Strings related to Reminder activity -->
+    <string name="button_add">Add</string>
+
+    <!-- Sttrings related to buttons -->
+    <string name="display_button">Back to main</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+</resources>
