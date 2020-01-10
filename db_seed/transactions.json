@@ -1,0 +1,4 @@
+[{"fromID":"foo@bar.com","toID":"test@test.com","amount":15,"transactionDate":"12/1/2019 12:00:00"},
+{"fromID":"foo@bar.com","toID":"bar@foo.com","amount":10,"transactionDate":"12/1/2019 12:00:00"},
+{"fromID":"test@test.com","toID":"foo@bar.com","amount":24,"transactionDate":"12/1/2019 12:00:00"},
+{"fromID":"bar@foo.com","toID":"foo@bar.com","amount":8,"transactionDate":"12/1/2019 12:00:00"}]
