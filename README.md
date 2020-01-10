@@ -20,12 +20,13 @@ Assignment 1 features:
   - Add and remove reminders that are persisted locally
 
 Assignment 2 features:
-- Main page with menu and weather information
+- Main page with menu, weather information and a random dog image
   - from https://www.metaweather.com/api/
+  - from https://shibe.online/
 - View transactions feature
   - View money sent
   - View money received
-** additional ideas: change password
+** additional ideas: change password, upload and download image(?)
 
 ## noSQL structure
 - Users
@@ -40,3 +41,9 @@ Assignment 2 features:
   - transactionDate
 
 Altogether = 5 main features
+
+## TODO:
+
+1. get and post transactions: see PluralSight/ word doc
+2. authentication: see PluralSight/ word doc
+3. download images: see https://www.youtube.com/watch?v=IrOhAOwXPhg
