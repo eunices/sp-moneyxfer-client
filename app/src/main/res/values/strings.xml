@@ -14,10 +14,10 @@
     <!-- Strings related to Menu activity -->
     <string name="button_transfer">Transfer money</string>
     <string name="button_reminder">View reminders</string>
-    <string name="button_reminder_hint">Type reminder here</string>
     <string name="welcome_message">Hello, what would you like to do today?</string>
 
     <!-- Strings related to Reminder activity -->
+    <string name="button_reminder_hint">Type reminder here</string>
     <string name="button_add">Add</string>
 
     <!-- Sttrings related to buttons -->
