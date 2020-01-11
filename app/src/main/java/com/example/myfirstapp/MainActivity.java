@@ -9,37 +9,79 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.myfirstapp.LoginActivity;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Date;
 
 
 public class MainActivity extends AppCompatActivity {
     public static final String AMOUNT = "com.example.myfirstapp.AMOUNT";
     public static final String RECIPIENT = "com.example.myfirstapp.RECIPIENT";
 
+    // Firebase stuff
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mDatabaseReference;
+
+    // TextView
+    EditText amount;
+    EditText recipient;
+    String amountStr;
+    Float amountFloat;
+    String recipientStr;
+    String mEmail;
+    Date today;
+    String todayStr;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mDatabaseReference = mFirebaseDatabase.getReference().child("transactions");
+
+        // initialize variables
+        amount = findViewById(R.id.sendMoneyAmount);
+        recipient = findViewById(R.id.sendMoneyTo);
+
     }
 
     /** Called when the user taps the Send button */
     public void sendMoney(View view) {
+
         Intent intent = new Intent(this, DisplayMessageActivity.class);
 
-        EditText amount = (EditText) findViewById(R.id.sendMoneyAmount);
-        String amountStr = amount.getText().toString();
-        EditText recipient = (EditText) findViewById(R.id.sendMoneyTo);
-        String recipientStr = recipient.getText().toString();
+        recipientStr = recipient.getText().toString();
+        mEmail = SharedPreferencesUtils.getEmail(MainActivity.this);
+        todayStr = Util.dateToString(new Date());
+
+        amountStr = amount.getText().toString();
 
         if (recipientStr.contains("@")) {
+
             try {
-                float amountFloat = Float.parseFloat(amountStr);
+                amountFloat = Float.parseFloat(amountStr);
+
+                TransactionModel txn = new TransactionModel(mEmail, recipientStr, amountFloat, todayStr);
+                mDatabaseReference.push().setValue(txn);
+
+                // Send to next activity
                 intent.putExtra(AMOUNT, amountStr);
                 intent.putExtra(RECIPIENT, recipientStr);
+                Toast.makeText(MainActivity.this, "Sending money",
+                        Toast.LENGTH_SHORT).show();
                 startActivity(intent);
+
+                // Clean
+                recipient.setText("");
+                amount.setText("");
+
             } catch(Exception e) {
                 Toast.makeText(MainActivity.this, "Enter a valid number",
                         Toast.LENGTH_LONG).show();
             }
+
         } else {
             Toast.makeText(MainActivity.this, "Enter a valid email",
                     Toast.LENGTH_LONG).show();
