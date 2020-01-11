@@ -25,6 +25,12 @@ public class MenuActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void goToTransactionsActivity(View view) {
+        Intent intent = new Intent(this, ViewTransactionsActivity.class);
+        startActivity(intent);
+    }
+
+
     public void goToTransferMoneyActivity(View view) {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);

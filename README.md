@@ -42,7 +42,6 @@ Altogether = 5 main features
   - amount
   - transactionDate
 
-
 ## TODO:
 
 1. get and post transactions: see PluralSight/ word doc

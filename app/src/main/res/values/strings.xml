@@ -13,6 +13,7 @@
 
     <!-- Strings related to Menu activity -->
     <string name="button_transfer">Transfer money</string>
+    <string name="button_transactions">View transactions</string>
     <string name="button_reminder">View reminders</string>
     <string name="welcome_message">Hello, what would you like to do today?</string>
 
@@ -35,4 +36,5 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="title_activity_view_transactions">ViewTransactionsActivity</string>
 </resources>
