@@ -37,7 +37,7 @@ public class ViewTransactionsActivity extends AppCompatActivity {
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 TransactionModel txn = dataSnapshot.getValue(TransactionModel.class);
                 TextView sent = findViewById(R.id.amountSent);
-                sent.setText(txn.getToID());
+                sent.setText(txn.getTransactionString());
             }
 
             @Override

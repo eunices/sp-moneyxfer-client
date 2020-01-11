@@ -32,5 +32,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
     implementation 'com.google.firebase:firebase-analytics:17.2.0'
     implementation 'com.google.firebase:firebase-database:19.2.0'
-
+    implementation 'com.loopj.android:android-async-http:1.4.9'
+    implementation 'org.json:json:20171018'
+    implementation 'com.squareup.picasso:picasso:2.71828'
 }

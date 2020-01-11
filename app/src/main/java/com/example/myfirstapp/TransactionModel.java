@@ -15,6 +15,10 @@ public class TransactionModel {
         this.setTransactionDate(transactionDate);
     }
 
+    public String getTransactionString() {
+        return transactionDate + " SGD " + amount + " from " + fromID + " to " + toID;
+    }
+
 
     public String getFromID() {
         return fromID;
