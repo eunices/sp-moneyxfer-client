@@ -1,19 +1,20 @@
 package com.example.myfirstapp;
 
-import java.util.Date;
-
 public class TransactionModel {
     private String fromID;
     private String toID;
     private Float amount;
     private String transactionDate;
 
-    public TransactionModel (String fromID, String toID, Float amount, String transactionDate) {
+    public TransactionModel(){}
+
+    public TransactionModel(String fromID, String toID, Float amount, String transactionDate) {
         this.setFromID(fromID);
         this.setToID(toID);
         this.setAmount(amount);
         this.setTransactionDate(transactionDate);
     }
+
 
     public String getFromID() {
         return fromID;

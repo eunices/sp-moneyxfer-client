@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.myfirstapp.LoginActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -38,8 +37,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mDatabaseReference = mFirebaseDatabase.getReference().child("transactions");
+        FirebaseUtil.openChildReference("transactions");
+        mFirebaseDatabase = FirebaseUtil.mFirebaseDatabase;
+        mDatabaseReference = FirebaseUtil.mDatabaseReference;
 
         // initialize variables
         amount = findViewById(R.id.sendMoneyAmount);
@@ -54,13 +54,12 @@ public class MainActivity extends AppCompatActivity {
 
         recipientStr = recipient.getText().toString();
         mEmail = SharedPreferencesUtils.getEmail(MainActivity.this);
-        todayStr = Util.dateToString(new Date());
-
-        amountStr = amount.getText().toString();
+        todayStr = DateUtil.dateToString(new Date());
 
         if (recipientStr.contains("@")) {
 
             try {
+                amountStr = amount.getText().toString();
                 amountFloat = Float.parseFloat(amountStr);
 
                 TransactionModel txn = new TransactionModel(mEmail, recipientStr, amountFloat, todayStr);
