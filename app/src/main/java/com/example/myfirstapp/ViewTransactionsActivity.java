@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -13,18 +14,25 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
 public class ViewTransactionsActivity extends AppCompatActivity {
 
-    ArrayList<TransactionModel> transactions;
-    String transactionsString = "";
+    public ArrayList<TransactionModel> transactions;
+    public String transactionsStringReceived = "";
+    public String transactionsStringSent = "";
 
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
-    private ChildEventListener mChildListener;
+    private Query query;
+
+    private String mEmail;
+
+    TextView received;
+    TextView sent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,16 +43,40 @@ public class ViewTransactionsActivity extends AppCompatActivity {
         mFirebaseDatabase = FirebaseUtil.mFirebaseDatabase;
         mDatabaseReference = FirebaseUtil.mDatabaseReference;
 
+        mEmail = SharedPreferencesUtils.getEmail(ViewTransactionsActivity.this);
+
+        received = findViewById(R.id.amountReceived);
+        sent = findViewById(R.id.amountSent);
+
+        received.setMovementMethod(new ScrollingMovementMethod());
+        sent.setMovementMethod(new ScrollingMovementMethod());
+
+        showTransactions();
+
+    }
+
+    public void showTransactions() {
+
+        // query = mDatabaseReference.orderByChild("toID").equalTo(mEmail);
+
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                for(DataSnapshot ds: dataSnapshot.getChildren()) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     TransactionModel txn = ds.getValue(TransactionModel.class);
-                    transactionsString += txn.getTransactionString() + "\n\n";
+
+                    if (txn.getToID().equals(mEmail)) {
+                        transactionsStringReceived += txn.getTransactionString() + "\n\n";
+                    }
+                    if (txn.getFromID().equals(mEmail)) {
+                        transactionsStringSent += txn.getTransactionString() + "\n\n";
+                    }
                 }
-                TextView sent = findViewById(R.id.amountSent);
-                sent.setText(transactionsString);
+
+                received.setText(transactionsStringReceived);
+                sent.setText(transactionsStringSent);
+
             }
 
             @Override
@@ -54,39 +86,10 @@ public class ViewTransactionsActivity extends AppCompatActivity {
                 // ...
             }
         };
+
+        // query.addValueEventListener(postListener);
         mDatabaseReference.addValueEventListener(postListener);
 
-//        mChildListener = new ChildEventListener() {
-//            @Override
-//            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-//                TransactionModel txn = dataSnapshot.getValue(TransactionModel.class);
-//                TextView sent = findViewById(R.id.amountSent);
-//                sent.setText(txn.getTransactionString());
-//            }
-//
-//            @Override
-//            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-//
-//            }
-//
-//            @Override
-//            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-//
-//            }
-//
-//            @Override
-//            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        };
-//
-//        mDatabaseReference.addChildEventListener(mChildListener);
-
     }
-
 }
+
