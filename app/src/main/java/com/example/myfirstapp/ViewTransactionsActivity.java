@@ -27,7 +27,6 @@ public class ViewTransactionsActivity extends AppCompatActivity {
 
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
-    private Query query;
 
     private String mEmail;
 

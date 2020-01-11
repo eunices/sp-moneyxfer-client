@@ -10,6 +10,12 @@ import android.content.pm.PackageManager;
 import androidx.annotation.NonNull;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -25,6 +31,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -44,6 +51,10 @@ import static android.Manifest.permission.READ_CONTACTS;
  * A login screen that offers login via email/password.
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mDatabaseReference;
+    private Query query;
+    private boolean isUserValid = false;
 
     public static String KEY = "SESSION";
 
@@ -322,26 +333,45 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
 
+
+            // Simulate network access.
+            FirebaseUtil.openChildReference("users");
+            mFirebaseDatabase = FirebaseUtil.mFirebaseDatabase;
+            mDatabaseReference = FirebaseUtil.mDatabaseReference;
+            query = mDatabaseReference.orderByChild("email").equalTo(mEmail);
+
+            ValueEventListener postListener = new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                        UserModel usr = ds.getValue(UserModel.class);
+                        isUserValid = usr.getEmail().equals(mEmail) &
+                                usr.getPassword().equals(mPassword);
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    // Getting Post failed, log a message
+                    Log.w("TEST", "loadPost:onCancelled", databaseError.toException());
+                    // ...
+                }
+            };
+
+            query.addValueEventListener(postListener);
             try {
-                // Simulate network access.
                 Thread.sleep(2000);
             } catch (InterruptedException e) {
+
+            }
+
+            if(isUserValid) {
+                return true;
+            } else {
                 return false;
             }
-
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }
-
-            // TODO: register the new account here.
-
-            return false;
         }
 
         @Override

@@ -43,5 +43,5 @@ Altogether = 5 main features
 ## TODO:
 
 1. get and post transactions: see PluralSight/ word doc
-2. authentication: see PluralSight/ word doc
-3. download images: see https://www.youtube.com/watch?v=IrOhAOwXPhg
+2. download images: see https://www.youtube.com/watch?v=IrOhAOwXPhg
+3. authentication: see PluralSight/ word doc
