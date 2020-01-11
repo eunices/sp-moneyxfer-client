@@ -28,6 +28,8 @@ Assignment 2 features:
   - View money received
 ** additional ideas: change password, upload and download image(?)
 
+Altogether = 5 main features
+
 ## noSQL structure
 - Users
   - uid PK
@@ -40,7 +42,6 @@ Assignment 2 features:
   - amount
   - transactionDate
 
-Altogether = 5 main features
 
 ## TODO:
 
