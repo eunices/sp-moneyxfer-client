@@ -9,7 +9,14 @@
     <string name="enter_recipient">Recipient email</string>
     <string name="currency_sgd">SGD</string>
     <string name="button_send">Send</string>
-    <string name="send_money_title">Transfer money</string>
+    <string name="wm_transfer">Transfer Money</string>
+
+    <!-- Strings related to Transactions activity -->
+    <string name="wm_transactions">View Transactions</string>
+    <string name="amount_sent">Amount sent</string>
+    <string name="amount_received">Amount received</string>
+    <string name="amount_sent_dummy">You did not send anything</string>
+    <string name="amount_received_dummy">You did not receive anything</string>
 
     <!-- Strings related to Menu activity -->
     <string name="button_transfer">Transfer money</string>

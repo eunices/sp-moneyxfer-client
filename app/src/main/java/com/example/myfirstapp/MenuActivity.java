@@ -9,14 +9,17 @@ import android.widget.TextView;
 
 public class MenuActivity extends AppCompatActivity {
 
+    String mEmail;
+    TextView textView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
         // load email
-        String mEmail = SharedPreferencesUtils.getEmail(MenuActivity.this);
-        TextView textView = (TextView) findViewById(R.id.textView2);
+        mEmail = SharedPreferencesUtils.getEmail(MenuActivity.this);
+        textView = findViewById(R.id.textView2);
         textView.setText("Hello " + mEmail + ", welcome!");
     }
 
@@ -29,7 +32,6 @@ public class MenuActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ViewTransactionsActivity.class);
         startActivity(intent);
     }
-
 
     public void goToTransferMoneyActivity(View view) {
         Intent intent = new Intent(this, MainActivity.class);
