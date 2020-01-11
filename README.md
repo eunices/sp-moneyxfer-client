@@ -20,7 +20,7 @@ Assignment 1 features:
   - Add and remove reminders that are persisted locally
 
 Assignment 2 features:
-- Main page with menu and a random dog image from https://shibe.online/
+- Main page with menu, a random quote and a random dog image from https://shibe.online/
 - View transactions feature
   - View money sent
   - View money received

@@ -16,7 +16,7 @@ public class TransactionModel {
     }
 
     public String getTransactionString() {
-        return transactionDate + " SGD " + amount + " from " + fromID + " to " + toID;
+        return transactionDate + "\nSGD " + amount + "0 from " + fromID + " to " + toID;
     }
 
 
