@@ -3,6 +3,7 @@ package com.example.myfirstapp;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 
@@ -39,12 +40,12 @@ import java.util.List;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
-/* TODO: attempt login number of attempts */
-
 /**
  * A login screen that offers login via email/password.
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
+
+    public static String KEY = "SESSION";
 
     /**
      * Id to identity READ_CONTACTS permission request.
@@ -178,9 +179,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         // Check for a valid password, if the user entered one.
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
-            focusView = mPasswordView;
-            cancel = true;
+                mPasswordView.setError(getString(R.string.error_invalid_password));
+                focusView = mPasswordView;
+                cancel = true;
         }
 
         // Check for a valid email address.
@@ -208,12 +209,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
         return email.contains("@");
     }
 
     private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
         return password.length() > 4;
     }
 
@@ -341,6 +340,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
 
             // TODO: register the new account here.
+
             return false;
         }
 
@@ -350,8 +350,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             if (success) {
+
+                // save email to shared preferences
+                SharedPreferencesUtils.saveEmail(mEmail, LoginActivity.this);
+
                 finish();
-                Intent nextActivity = new Intent(LoginActivity.this, Menu.class);
+                Intent nextActivity = new Intent(LoginActivity.this, MenuActivity.class);
                 startActivity(nextActivity);
             } else {
                 counter--;

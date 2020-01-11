@@ -30,7 +30,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
     }
 
     public void backToMain(View view) {
-        Intent intent = new Intent(this, Menu.class);
+        Intent intent = new Intent(this, MenuActivity.class);
         startActivity(intent);
     }
 

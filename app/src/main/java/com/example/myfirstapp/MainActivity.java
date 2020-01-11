@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /** Called when the user taps the Send button */
-    public void sendMessage(View view) {
+    public void sendMoney(View view) {
         Intent intent = new Intent(this, DisplayMessageActivity.class);
 
         EditText amount = (EditText) findViewById(R.id.sendMoneyAmount);
