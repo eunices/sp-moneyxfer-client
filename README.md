@@ -9,30 +9,25 @@ Want to transfer money to your friend? Hesitate no further, use moneyXfer. Sign 
 
 ## Features summary
 
-Assignment 1 features:
+Assignment 1 features (+ enhancements during assignment 2 in **bold**):
 - Splash page and login feature
-  - Login with email and password
+  - Login with email and password **with Google Firebase authentication**
   - Login attempt counter
-  - Store email in localstore?
+  - **Store email in SharedPreferences**
 - Transfer money feature
-  - Transfer money (validated fields)
+  - Transfer money (validated fields) **with Google Firebase realtime database**
 - Reminder list feature
   - Add and remove reminders that are persisted locally
 
 Assignment 2 features:
-- Main page with menu, a random quote and a random dog image from https://shibe.online/
+- Main page with menu, a random quote from https://quote-garden.herokuapp.com/quotes/random and a random dog image from https://shibe.online/
 - View transactions feature
   - View money sent
   - View money received
-** additional ideas: change password, upload and download image(?)
 
 Altogether = 5 main features
 
 ## noSQL structure
-- Users
-  - uid PK
-  - email (unique)
-  - password
 - Transactions
   - transactionId PK
   - fromID
@@ -40,8 +35,8 @@ Altogether = 5 main features
   - amount
   - transactionDate
 
-## TODO:
-
-1. get and post transactions: see PluralSight/ word doc
-2. download images: see https://www.youtube.com/watch?v=IrOhAOwXPhg
-3. authentication: see PluralSight/ word doc
+(old structure when using Firebase database)
+- Users
+  - uid PK
+  - email (unique)
+  - password
