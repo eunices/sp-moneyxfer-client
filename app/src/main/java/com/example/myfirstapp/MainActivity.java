@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
     Float amountFloat;
     String recipientStr;
     String mEmail;
-    Date today;
     String todayStr;
 
     @Override

@@ -3,13 +3,19 @@ package com.example.myfirstapp;
 import androidx.appcompat.app.AppCompatActivity;
 import cz.msebera.android.httpclient.Header;
 
+import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.squareup.picasso.Picasso;
@@ -42,6 +48,28 @@ public class MenuActivity extends AppCompatActivity {
             makeApiCallQuote();
         } catch (Exception e) {
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.logout_menu:
+                FirebaseAuth.getInstance().signOut();
+                Toast.makeText(MenuActivity.this, "Logging out", Toast.LENGTH_SHORT).show();
+                finish();
+                Intent nextActivity = new Intent(MenuActivity.this, LoginActivity.class);
+                startActivity(nextActivity);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    };
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
     }
 
     public void makeApiCallImage() throws JSONException {
