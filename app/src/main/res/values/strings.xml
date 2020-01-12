@@ -30,6 +30,7 @@
 
     <!-- Sttrings related to buttons -->
     <string name="display_button">Back to main</string>
+    <string name="logout_button">Logout</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>

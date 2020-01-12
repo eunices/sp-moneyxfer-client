@@ -3,19 +3,20 @@ package com.example.myfirstapp;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -41,6 +42,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +57,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private DatabaseReference mDatabaseReference;
     private Query query;
     private boolean isUserValid = false;
+
+    private FirebaseAuth mAuth;
+    private FirebaseUser currentUser;
 
     public static String KEY = "SESSION";
 
@@ -94,6 +99,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
 
+        // Setup firebase auth
+        mAuth = FirebaseAuth.getInstance();
+
         // Change to global variable
         mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button); // global variable
 
@@ -121,6 +129,20 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mProgressView = findViewById(R.id.login_progress);
 
         mAttempts = findViewById(R.id.loginAttempts);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            SharedPreferencesUtils.saveEmail(currentUser.getEmail(), LoginActivity.this);
+
+            finish();
+            Intent nextActivity = new Intent(LoginActivity.this, MenuActivity.class);
+            startActivity(nextActivity);
+        }
     }
 
     private void populateAutoComplete() {
@@ -306,7 +328,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mEmailView.setAdapter(adapter);
     }
 
-
     private interface ProfileQuery {
         String[] PROJECTION = {
                 ContactsContract.CommonDataKinds.Email.ADDRESS,
@@ -326,6 +347,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         private final String mEmail;
         private final String mPassword;
 
+        private String TAG = "Sign in";
+
+        private Boolean isUserValid = false;
+
         UserLoginTask(String email, String password) {
             mEmail = email;
             mPassword = password;
@@ -334,37 +359,30 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         @Override
         protected Boolean doInBackground(Void... params) {
 
+            mAuth.signInWithEmailAndPassword(mEmail, mPassword)
+                    .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                // Sign in success, update UI with the signed-in user's information
+                                Log.d(TAG, "signInWithEmail:success");
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                if(user != null) {
+                                    isUserValid = true;
+                                }
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Log.w(TAG, "signInWithEmail:failure", task.getException());
+                                Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
 
-            // Simulate network access.
-            FirebaseUtil.openChildReference("users");
-            mFirebaseDatabase = FirebaseUtil.mFirebaseDatabase;
-            mDatabaseReference = FirebaseUtil.mDatabaseReference;
-            query = mDatabaseReference.orderByChild("email").equalTo(mEmail);
 
-            ValueEventListener postListener = new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-
-                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                        UserModel usr = ds.getValue(UserModel.class);
-                        isUserValid = usr.getEmail().equals(mEmail) &
-                                usr.getPassword().equals(mPassword);
-                    }
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    // Getting Post failed, log a message
-                    Log.w("TEST", "loadPost:onCancelled", databaseError.toException());
-                    // ...
-                }
-            };
-
-            query.addValueEventListener(postListener);
             try {
                 Thread.sleep(2000);
             } catch (InterruptedException e) {
-
             }
 
             if(isUserValid) {
