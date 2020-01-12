@@ -27,6 +27,12 @@ Assignment 2 features:
 
 Altogether = 5 main features
 
+## How to use
+
+- Login with dummy account
+    Email: foo@bar.com
+    Password: hello123
+
 ## noSQL structure
 - Transactions
   - transactionId PK
