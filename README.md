@@ -21,8 +21,8 @@ Assignment 1 features (+ enhancements during assignment 2 in **bold**):
   - Add and remove reminders that are persisted locally
 
 Assignment 2 features:
-- Main page with menu, a random quote from https://quote-garden.herokuapp.com/quotes/random and a random dog image from https://shibe.online/
-- View transactions feature
+- Main page with menu, a random quote from https://quote-garden.herokuapp.com/quotes/random and a random dog image from https://shibe.online/ (using external content providers and downloading images)
+- View transactions feature (getting realtime data from Firebase noSQL db)
   - View money sent
   - View money received
 
