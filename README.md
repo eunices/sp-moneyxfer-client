@@ -14,6 +14,7 @@ Assignment 1 features (+ enhancements during assignment 2 in **bold**):
   - Login with email and password **with Google Firebase authentication**
   - Login attempt counter
   - **Store email in SharedPreferences**
+  - **Logout feature with Action Bar**
 - Transfer money feature
   - Transfer money (validated fields) **with Google Firebase realtime database**
 - Reminder list feature
